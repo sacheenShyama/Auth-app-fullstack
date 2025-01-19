@@ -12,7 +12,7 @@ const registerUser = async (req, res) => {
         .json({ message: "Validation failed", error: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, image } = req.body;
     if (!name || !email || !password) {
       return res
         .status(400)
@@ -37,8 +37,15 @@ const registerUser = async (req, res) => {
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    const user = new User({ name, email, password: hashedPassword });
+    const image_url =
+      image ||
+      "https://pics.craiyon.com/2023-06-26/b9b1a22a02414687a6ee21564052117f.webp";
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      image: image_url,
+    });
     await user.save();
 
     res.status(200).json({

@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: [3, "Name must be at least 3 characters long"],
     },
+    image: { type: String },
     password: {
       type: String,
       requied: [true, "Password is requied"],
